@@ -1,6 +1,6 @@
 {
   "name": "kinetic-gain-embedded",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Kinetic Gain Embedded — drop-in audit-stream + Decision Card vault contract SDK for B2B SaaS. Emit hash-chained Suite-compliant audit events, enforce vault contracts before AI tools touch sensitive data, validate Decision Cards. TypeScript-first, dual ESM/CJS, zero runtime deps.",
   "license": "Apache-2.0",
   "author": "Miz Causevic <miz@kineticgain.com>",

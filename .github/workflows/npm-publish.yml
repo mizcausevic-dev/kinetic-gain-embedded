@@ -1,0 +1,66 @@
+name: npm-publish
+
+# Publishes to npm on every v* tag push (e.g. v0.1.1, v1.0.0, v1.0-prod).
+# Also supports manual dispatch with an explicit version (no tag required).
+#
+# Setup once: add NPM_TOKEN secret to the repo (Settings → Secrets → Actions).
+# The token must be an "Automation" type token (bypasses 2FA at publish time).
+# See: https://docs.npmjs.com/creating-and-viewing-access-tokens
+#
+# Safety: this workflow runs ONLY on tags or manual dispatch. Push-to-main
+# never triggers a publish. The `prepublishOnly` script (in package.json)
+# additionally re-runs clean + build + test before npm publish actually
+# uploads — a final pre-flight gate.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Pack-only dry run (don't publish)"
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write   # enables npm provenance attestation
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so npm provenance can link to commit
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      - run: npm install --no-audit --no-fund
+
+      - name: Typecheck + tests (pre-flight)
+        run: |
+          npm run typecheck
+          npm test
+
+      - name: Build dual ESM/CJS
+        run: npm run build
+
+      - name: ESM smoke
+        run: node -e "import('./dist/esm/index.js').then(m => { if (!m.AuditStream) throw new Error('AuditStream not exported from ESM'); console.log('ESM OK'); })"
+
+      - name: CJS smoke
+        run: node -e "const m = require('./dist/cjs/index.cjs'); if (!m.AuditStream) throw new Error('AuditStream not exported from CJS'); console.log('CJS OK');"
+
+      - name: npm pack (dry-run preview)
+        run: npm pack --dry-run
+
+      - name: Publish to npm
+        if: ${{ github.event_name == 'push' || github.event.inputs.dry_run == 'false' }}
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,6 +1,21 @@
 # Changelog
 
-## [0.1] — 2026-05-30
+## [0.1.1] — 2026-05-30
+
+### Added
+
+- `.github/workflows/npm-publish.yml` — auto-publishes to npm on every `v*` tag push. Includes typecheck + tests + build + ESM/CJS smoke + `npm pack --dry-run` preview before publish. Uses npm provenance attestation (links the published artifact to the exact commit + workflow run via SLSA Level 3).
+- README: "Publishing" section with 4-step one-time setup (add NPM_TOKEN secret → bump version → tag → push).
+- README: npm-publish workflow badge.
+- README: bumped vertical 6-pack count from 7 to 8 (LegalTech shipped in the 2026-05-30 milestone close).
+
+### Notes
+
+- Package contents verified via `npm pack --dry-run`: 49 files, 27.3 kB packed / 100.9 kB unpacked. Includes `dist/` (ESM + CJS + types + sourcemaps) + `schema/` + `README.md` + `CHANGELOG.md` + `LICENSE`.
+- `prepublishOnly` script in `package.json` (clean + build + test) acts as a final pre-flight gate before npm receives the tarball — runs both locally and inside the workflow.
+- v0.1.0 was never published to npm; v0.1.1 is the first npm-publish-ready release once `NPM_TOKEN` secret is added.
+
+## [0.1.0] — 2026-05-30
 
 ### Added
 

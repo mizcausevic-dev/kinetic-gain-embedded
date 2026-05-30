@@ -1,6 +1,7 @@
 # kinetic-gain-embedded
 
 [![ci](https://github.com/mizcausevic-dev/kinetic-gain-embedded/actions/workflows/ci.yml/badge.svg)](https://github.com/mizcausevic-dev/kinetic-gain-embedded/actions/workflows/ci.yml)
+[![npm-publish](https://github.com/mizcausevic-dev/kinetic-gain-embedded/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/mizcausevic-dev/kinetic-gain-embedded/actions/workflows/npm-publish.yml)
 [![npm version](https://img.shields.io/npm/v/kinetic-gain-embedded.svg)](https://www.npmjs.com/package/kinetic-gain-embedded)
 [![license: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![node: ≥20](https://img.shields.io/badge/node-%E2%89%A520-brightgreen.svg)](package.json)
@@ -162,7 +163,7 @@ That's the whole contract.
 - [Kinetic Gain Protocol Suite](https://suite.kineticgain.com) — the umbrella
 - [`ai-procurement-decision-spec`](https://github.com/mizcausevic-dev/ai-procurement-decision-spec) — the Decision Card v0.3 spec this SDK enforces
 - [`fhir-resource-access-audit-reference`](https://github.com/mizcausevic-dev/fhir-resource-access-audit-reference) — HealthTech-specific end-to-end reference using a sibling vault contract
-- The Suite's 7 vertical 6-packs (HealthTech, EdTech, PropTech, InsurTech, HR Tech, FinTech, GovTech) — every audit-stream spec consumed by this SDK
+- The Suite's 8 vertical 6-packs (HealthTech, EdTech, PropTech, InsurTech, HR Tech, FinTech, GovTech, LegalTech) — every audit-stream spec consumed by this SDK
 
 ## Compliance posture
 
@@ -170,11 +171,24 @@ This SDK is **audit-stream scaffolding**. Producing a verified hash-chained stre
 
 Per the Kinetic Gain standing public-language guardrail: *readiness · evidence · posture · controls · scaffolding* — never "compliant" / "certified" without an external attestation specific to each regime.
 
+## Publishing
+
+This package is **npm-publish-ready**. The `.github/workflows/npm-publish.yml` workflow auto-publishes to npm on every `v*` tag push, with npm provenance attestation enabled (links the published artifact to the exact commit + workflow run).
+
+To publish:
+
+1. **One-time setup:** add an npm "Automation" type access token as `NPM_TOKEN` in the repo's GitHub Actions secrets (Settings → Secrets and variables → Actions → New repository secret). Automation tokens bypass 2FA at publish time, which is what `--provenance` requires.
+2. **Bump version** in `package.json` (e.g. `0.1.0` → `0.1.1` for a patch release).
+3. **Tag + push:** `git tag v0.1.1 && git push origin v0.1.1`.
+4. The workflow runs: typecheck → tests → build → ESM/CJS smoke → `npm pack --dry-run` preview → `npm publish --access public --provenance`.
+
+Before publishing, the local `prepublishOnly` script (in `package.json`) re-runs clean + build + test as a final pre-flight gate — both locally (if you ever `npm publish` from your machine) and in the workflow.
+
 ## License
 
 [Apache-2.0](LICENSE). Pick it up, embed it, ship it.
 
 ## Status
 
-- v0.1 (Phase 1) — production SDK for TypeScript + Node. 42 tests across 4 suites. Dual ESM/CJS output. Zero runtime deps.
+- v0.1 (Phase 1) — production SDK for TypeScript + Node. 42 tests across 4 suites. Dual ESM/CJS output. Zero runtime deps. **npm-publish-ready** (workflow shipped; awaiting NPM_TOKEN secret).
 - v0.2+ (Phase 2 candidates) — Python SDK · OpenTelemetry sink · Decision Card CRDT for multi-party signing
