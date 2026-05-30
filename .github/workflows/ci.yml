@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ["20", "22"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm install --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: ESM smoke
+        run: node -e "import('./dist/esm/index.js').then(m => { if (!m.AuditStream) throw new Error('AuditStream not exported'); console.log('ESM OK'); })"
+      - name: CJS smoke
+        run: node -e "const m = require('./dist/cjs/index.cjs'); if (!m.AuditStream) throw new Error('AuditStream not exported'); console.log('CJS OK');"
+      - name: Standalone demo
+        run: node examples/standalone/demo.mjs

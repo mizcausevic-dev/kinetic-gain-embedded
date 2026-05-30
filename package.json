@@ -1,0 +1,66 @@
+{
+  "name": "kinetic-gain-embedded",
+  "version": "0.1.0",
+  "description": "Kinetic Gain Embedded — drop-in audit-stream + Decision Card vault contract SDK for B2B SaaS. Emit hash-chained Suite-compliant audit events, enforce vault contracts before AI tools touch sensitive data, validate Decision Cards. TypeScript-first, dual ESM/CJS, zero runtime deps.",
+  "license": "Apache-2.0",
+  "author": "Miz Causevic <miz@kineticgain.com>",
+  "homepage": "https://kineticgain.com/embedded/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mizcausevic-dev/kinetic-gain-embedded.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mizcausevic-dev/kinetic-gain-embedded/issues"
+  },
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "schema/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && node scripts/rename-cjs.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build && npm test"
+  },
+  "keywords": [
+    "kinetic-gain",
+    "kinetic-gain-protocol-suite",
+    "embedded-analytics",
+    "audit-stream",
+    "decision-card",
+    "vault-contract",
+    "ai-governance",
+    "ai-disclosure",
+    "hash-chained-audit",
+    "tokenization",
+    "saas-embedding",
+    "typescript",
+    "compliance-scaffolding",
+    "ed25519"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
