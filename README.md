@@ -22,15 +22,11 @@ TypeScript-first. Dual ESM/CJS. Zero runtime dependencies. Node 20+.
 
 ## Install
 
-> **Publish-pending on npm.** The v0.1.1 publish workflow is wired and tested locally; the GitHub Action waits on the `NPM_TOKEN` org secret, which is provisioned alongside the production billing setup. Until then, install directly from GitHub at the tagged SHA:
-
 ```bash
-# Once npm publish ships (workflow will fire on the next tag push):
 npm install kinetic-gain-embedded
-
-# Until then — same code, SHA pinned by the v0.1.1 tag:
-npm install github:mizcausevic-dev/kinetic-gain-embedded#v0.1.1
 ```
+
+[![npm](https://img.shields.io/npm/v/kinetic-gain-embedded.svg)](https://www.npmjs.com/package/kinetic-gain-embedded) · Apache-2.0 · TypeScript dual ESM/CJS · zero runtime deps · Node 20+
 
 ## Five-minute integration
 
