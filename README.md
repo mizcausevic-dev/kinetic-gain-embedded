@@ -165,6 +165,16 @@ That's the whole contract.
 - [`fhir-resource-access-audit-reference`](https://github.com/mizcausevic-dev/fhir-resource-access-audit-reference) — HealthTech-specific end-to-end reference using a sibling vault contract
 - The Suite's 8 vertical 6-packs (HealthTech, EdTech, PropTech, InsurTech, HR Tech, FinTech, GovTech, LegalTech) — every audit-stream spec consumed by this SDK
 
+## Sales-enablement — Procurement Packet Starter
+
+When your enterprise customer's security team asks for a "procurement packet" or "security review packet" before they'll go to PoC, [`docs/sales/PROCUREMENT-PACKET.md`](./docs/sales/PROCUREMENT-PACKET.md) is a fill-in template you adapt and send.
+
+It is **KGE-enabled**: §8 of the packet contains four verifiable claims you can make about your trust boundary precisely *because* KGE backs them (hash-chained audit, vault contract tokenization, ed25519-signable events, customer-defined Decision Card). Your customer can verify each claim independently from the npm package — no proprietary tooling, no SaaS dependency.
+
+The packet maps to SIG-Lite, CAIQ, VSA Core, and custom AI security questionnaires (cross-reference table in §15). It is **scaffolding for human use, not a SOC 2 substitute, not legal advice** — fill in honestly, have counsel review, send. Honest framing for pre-SOC-2 vendors included verbatim in the template intro.
+
+Companion buyer-side templates (the inverse — your customer uses these to evaluate vendors like you): the [Kinetic Gain Trust Pack](https://kineticgain.com/trust/) — 8 browser-only tools including AI System Card Builder, AI Vendor Intake Form, and Vendor AI Disclosure Review. Pointing customers at those tools builds trust by handing them the evaluation framework.
+
 ## Compliance posture
 
 This SDK is **audit-stream scaffolding**. Producing a verified hash-chained stream + applying a vault contract gives you *evidence artifacts* an auditor can replay — it does not establish HIPAA / FERPA / SOC 2 / GDPR / ISO 27001 / NIST AI RMF / EU AI Act / ISO 42001 compliance. Compliance posture depends on the embedder's full control environment, executed business associate / data processing agreements, and the appropriate external attestation for each regime.
