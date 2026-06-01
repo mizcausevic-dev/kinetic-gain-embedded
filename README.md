@@ -18,6 +18,8 @@ This SDK gives you the runtime primitives. Three lines of code = a hash-chained,
 
 TypeScript-first. Dual ESM/CJS. Zero runtime dependencies. Node 20+.
 
+> **Want to see it work before you install?** [**Try the interactive playground in your browser →**](https://kineticgain.com/embedded/playground/) — edit a Decision Card, apply the vault contract live, emit hash-chained audit events, verify the chain. 100% client-side, no signup, your data never leaves the tab.
+
 ---
 
 ## Install
