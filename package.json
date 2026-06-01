@@ -59,7 +59,7 @@
     "ed25519"
   ],
   "devDependencies": {
-    "@types/node": "^20.11.0",
+    "@types/node": "^25.9.1",
     "typescript": "^5.4.5",
     "vitest": "^1.6.0"
   }
