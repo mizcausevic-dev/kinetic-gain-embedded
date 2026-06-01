@@ -19,6 +19,8 @@ This SDK gives you the runtime primitives. Three lines of code = a hash-chained,
 TypeScript-first. Dual ESM/CJS. Zero runtime dependencies. Node 20+.
 
 > **Want to see it work before you install?** [**Try the interactive playground in your browser →**](https://kineticgain.com/embedded/playground/) — edit a Decision Card, apply the vault contract live, emit hash-chained audit events, verify the chain. 100% client-side, no signup, your data never leaves the tab.
+>
+> **Security-aware?** [Threat model](https://kineticgain.com/embedded/threat-model/) (trust boundaries, cryptographic invariants, what KGE explicitly does NOT do) · [SECURITY.md](./SECURITY.md) (coordinated disclosure) · [Signing policy](https://kineticgain.com/trust/signing-policy/) (how we sign our own attestations + the 2026-06-01 drift incident that prompted the deploy-time defense).
 
 ---
 
