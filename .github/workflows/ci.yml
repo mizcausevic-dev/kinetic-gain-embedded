@@ -25,6 +25,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - run: npm install --no-audit --no-fund
+      # Supply-chain: fail CI on ANY advisory affecting a PRODUCTION
+      # dependency. KGE ships with zero runtime deps, so this gate is
+      # effectively "if you ever add a runtime dep with a known CVE, the
+      # build fails." Dev-only advisories (vitest, tsx, typescript build
+      # chain) are left to scheduled dependabot — they never ship to
+      # users so they're a different risk class. Note --audit-level=info
+      # = strictest; --omit=dev = filter to prod-only.
+      - name: npm audit (production deps only, any severity)
+        run: npm audit --omit=dev --audit-level=info
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
