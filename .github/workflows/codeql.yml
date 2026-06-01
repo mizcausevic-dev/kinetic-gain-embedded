@@ -1,0 +1,53 @@
+name: CodeQL
+
+# GitHub-hosted static analysis. Finds CWE-class bugs (injection,
+# crypto misuse, prototype pollution, etc) that aren't caught by tests.
+# Cost: ~3-5 min per run. Value: pre-merge gate on the SDK that
+# ships into customer Node processes.
+#
+# Triggers:
+#   - Every push to main (catches anything that bypasses PR review)
+#   - Every PR (block merge if findings are critical)
+#   - Weekly schedule (catches advisories in CodeQL itself that surface
+#     new bugs against unchanged code)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # 14:00 UTC Tuesday = mid-morning ET, after Monday dependabot wave
+    - cron: "0 14 * * 2"
+
+# Least-privilege: CodeQL needs to upload results to GitHub Code Scanning
+# (security-events: write). Everything else stays read.
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["javascript-typescript"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          # security-extended adds queries beyond the default suite —
+          # worth the extra minute for an SDK that handles regulated data.
+          queries: security-extended
+
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

@@ -1,0 +1,51 @@
+# Dependabot — supply-chain freshness for kinetic-gain-embedded.
+#
+# Two ecosystems:
+#   1. npm — the package's own deps. Currently ZERO runtime deps; this
+#      mostly watches devDeps (vitest, tsx, typescript build chain).
+#   2. github-actions — pinned action versions in our workflows. Catches
+#      action-major releases that need attention (e.g., actions/checkout@v4
+#      → v5 might change defaults).
+#
+# Cadence: weekly. Daily is overkill; monthly drifts too far. Monday
+# morning ET so the PR is on top of the queue when work starts.
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "supply-chain"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    # Group everything sensible into one PR per ecosystem-week so we don't
+    # get 8 PRs for 8 patch bumps. Security advisories STILL open their
+    # own PRs (default behavior).
+    groups:
+      dev-dependencies:
+        patterns: ["*"]
+        dependency-type: "development"
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:30"
+      timezone: "America/New_York"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
