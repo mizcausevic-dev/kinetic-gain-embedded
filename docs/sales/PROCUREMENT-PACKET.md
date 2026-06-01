@@ -317,6 +317,8 @@ curl https://yourcompany.com/.well-known/audit-signing.json
 
 We hand you the auditor's tools. You don't need to take our word for it.
 
+**Parallel:** Kinetic Gain's own security posture follows the same discipline. Every defensive layer running on the KG estate is documented and independently verifiable at <https://kineticgain.com/trust/security-posture/>. If KGE didn't dogfood the verifiability pattern we sell, you'd be right to discount this packet.
+
 ---
 
 ## 17 · Adjacent KG buyer-side templates
@@ -329,6 +331,7 @@ Your customer's security team may also benefit from these public buyer-side temp
 - [**Evidence Locker Template**](https://kineticgain.com/trust/evidence-locker/) — 8-section scaffold for organizing artifacts
 - [**Subprocessor Disclosure Template**](https://kineticgain.com/trust/subprocessors/) — what they should publish for their own customers
 - [**Executive Risk Register Starter**](https://kineticgain.com/trust/risk-register/) — 10-column template for tracking vendor-related risks
+- [**KG Security Posture**](https://kineticgain.com/trust/security-posture/) — KG's own posture, published the same way we ask vendors to publish theirs (17 defensive layers, every claim verifiable)
 
 Pointing them at these tools builds trust — you're handing them the evaluation framework, not running from it.
 
