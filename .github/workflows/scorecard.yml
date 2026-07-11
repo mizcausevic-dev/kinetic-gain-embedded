@@ -44,13 +44,16 @@ jobs:
 
       - name: Run Scorecard
         uses: ossf/scorecard-action@13ec8c77e8a5dae7e0a0d47bde3e3004df15d34f  # v2
+        continue-on-error: true # tolerate known external unavailability (GH code-search 429 / Sigstore signing) rather than hard-failing CI on it
         with:
           results_file: results.sarif
           results_format: sarif
-          # publish_results: true sends the score to the public Scorecard
-          # API so it appears at https://securityscorecards.dev/viewer/?uri=
-          # github.com/mizcausevic-dev/kinetic-gain-embedded
-          publish_results: true
+          # publish_results: false — publishing to the public Scorecard API
+          # (https://securityscorecards.dev) requires the Sigstore/Fulcio/TUF
+          # results-signing step, which has been failing upstream. Disabling
+          # publication removes that dependency; SARIF still uploads to this
+          # repo's own Security tab below.
+          publish_results: false
 
       - name: Upload SARIF (so Security tab shows findings)
         uses: github/codeql-action/upload-sarif@03e4368ac7daa2bd82b3e85262f3bf87ee112f57  # v3
